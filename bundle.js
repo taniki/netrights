@@ -52340,6 +52340,11 @@ var Documents = exports.Documents = [{
     "name": "Rapport d’information déposé par la Commission de réflexion et de propositions sur le droit et les libertés à l'âge du numérique",
     "author": "Conseil National du Numérique"
   }, {
+    "uri": "https://cnnumerique.fr/wp-content/uploads/2017/09/CNNum_avis_predictions_encryption_freedoms_sept2017.pdf",
+    "uri_h": "https://via.hypothes.is/https://cnnumerique.fr/wp-content/uploads/2017/09/CNNum_avis_predictions_encryption_freedoms_sept2017.pdf",
+    "name": "Predictions encryption and digital rights - September 2017",
+    "author": "Conseil National du Numérique"
+  }, {
     "uri": "https://digitalcharta.eu",
     "uri_h": "https://via.hypothes.is/https://digitalcharta.eu/#annotations:ZEia6jDSEeef9Gsz7rO3qw",
     "name": "Digital Charta",
@@ -56250,20 +56255,13 @@ function getPosition(node) {
 function renderNodes(block) {
     var walker = block.walker();
 
-    // Softbreaks are usually treated as newlines, but in HTML we might want explicit linebreaks
-    var softBreak = (
-        this.softBreak === 'br' ?
-        React.createElement('br') :
-        this.softBreak
-    );
-
     var propOptions = {
         sourcePos: this.sourcePos,
         escapeHtml: this.escapeHtml,
         skipHtml: this.skipHtml,
         transformLinkUri: this.transformLinkUri,
         transformImageUri: this.transformImageUri,
-        softBreak: softBreak,
+        softBreak: this.softBreak,
         linkTarget: this.linkTarget
     };
 
@@ -56356,6 +56354,12 @@ function renderNodes(block) {
             } else if (type === 'text') {
                 addChild(node, node.literal);
             } else if (type === 'softbreak') {
+                // Softbreaks are usually treated as newlines, but in HTML we might want explicit linebreaks
+                var softBreak = (
+                    this.softBreak === 'br' ?
+                    React.createElement('br', {key: key}) :
+                    this.softBreak
+                );
                 addChild(node, softBreak);
             }
         }
